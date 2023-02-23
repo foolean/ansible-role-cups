@@ -3,8 +3,18 @@
 # SPDX short identifier: BSD-3-Clause
 ---
 
-- name: Ensure CUPS is not installed (CIS)
-  become: true
-  ansible.builtin.package:
-    name: 'cups'
-    state: absent
+# We put the entire role in a block so we can create
+# a role specific tag, which saves the caller from
+# having to do so in their playbook.
+- name: Role foolean/cups
+  block:
+
+    - name: Ensure CUPS is not installed (CIS)
+      become: true
+      ansible.builtin.package:
+        name: 'cups'
+        state: absent
+
+  # Tags to be applied to this role (block)
+  tags:
+    - 'role_foolean_cups'
